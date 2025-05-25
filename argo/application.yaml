@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: springboot-app
+  namespace: argocd     # Ne PAS changer ! Argo CD regarde dans son namespace
+spec:
+  project: default
+  source:
+    repoURL: http://192.168.167.100:8081/repository/helm-hosted/
+    targetRevision: 0.1.0
+    chart: springboot-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hello
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
